@@ -31,3 +31,31 @@ export async function addUser (data: { firstname: string, lastname: string, user
       throw new Error('Error adding user.');
     }
   }
+
+  export async function findOneUser(email: string) {
+    try {
+      const user2 = await User.findOne({
+        where: {
+          email: email
+        }
+      });
+  
+      return user2;
+    } catch (error) {
+      throw new Error('Error login');
+    }
+  }
+
+  export async function findOneUser2 (id: number) {
+    try {
+      const user2 = await User.findOne({
+        where: {
+          id: id
+        }
+      });
+  
+      return user2;
+    } catch (error) {
+      throw new Error('Error login');
+    }
+  }
