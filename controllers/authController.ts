@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
-import { addUser, findUser, findAllUser, findOneUser } from "../models/UseModel/userquery";
+import {
+  addUser,
+  findUser,
+  findAllUser,
+  findOneUser,
+} from "../models/UserModel/userquery";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-const SECRET_KEY = process.env.SECRET_KEY || 'lalala this isnt secure';
+const SECRET_KEY = process.env.SECRET_KEY || "lalala this isnt secure";
 
 export async function getAllUsers(req: Request, res: Response) {
   try {
@@ -64,8 +69,7 @@ export async function postUserInfo(req: Request, res: Response) {
   }
 }
 
-export async function login2(req: Request, res: Response){
-
+export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   try {
     const user = await findOneUser(email);
@@ -76,6 +80,6 @@ export async function login2(req: Request, res: Response){
   } catch (error) {
     res
       .status(401)
-      .send({ error: '401', message: 'Username or password is incorrect' });
+      .send({ error: "401", message: "Username or password is incorrect" });
   }
-};
+}

@@ -1,18 +1,22 @@
-import {  Response, NextFunction} from "express";
-const jwt = require('jsonwebtoken');
-import { findOneUser2 } from "../models/UseModel/userquery";
+import { Response, NextFunction } from "express";
+const jwt = require("jsonwebtoken");
+import { findOneUser2 } from "../models/UserModel/userquery";
 import { ExtendedRequest } from "../src/express";
-const dotenv = require ('dotenv'); 
+const dotenv = require("dotenv");
 dotenv.config();
-const SECRET_KEY = process.env.SECRET_KEY || 'lalala this isnt secure';
+const SECRET_KEY = process.env.SECRET_KEY || "lalala this isnt secure";
 // REMOVE-END
 
-export async  function authMiddleware (req: ExtendedRequest, res: Response, next: NextFunction){
+export async function authMiddleware(
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) {
   // REMOVE-START
   // extract token from auth headers
-  const authHeaders = req.headers['authorization'];
+  const authHeaders = req.headers["authorization"] as string;
   if (!authHeaders) return res.sendStatus(403);
-  const token = authHeaders.split(' ')[1];
+  const token = authHeaders.split(" ")[1];
 
   try {
     // verify & decode token payload,
@@ -20,10 +24,11 @@ export async  function authMiddleware (req: ExtendedRequest, res: Response, next
     // attempt to find user object and set to req
     const user = await findOneUser2(id);
     if (!user) return res.sendStatus(401);
-    req.user= user;
+    req.user = user;
     next();
   } catch (error) {
     res.sendStatus(401);
   }
+
   // REMOVE-END
-};
+}
