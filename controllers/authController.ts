@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import {
   addUser,
-  findUser,
-  findAllUser,
   findOneUser,
 } from "../models/UserModel/userquery";
 const bcrypt = require("bcrypt");
@@ -11,28 +9,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY || "lalala this isnt secure";
 
-export async function getAllUsers(req: Request, res: Response) {
-  try {
-    const user = await findAllUser();
-    res.json({ data: user });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-}
-export async function getUserInfo(req: Request, res: Response) {
-  try {
-    let id = req.params.id;
-    const userId = Number(id);
-    if (id && userId) {
-      const user = await findUser(userId);
-      res.json({ data: user });
-    } else res.status(400).json({ message: "Invalid user ID." });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-}
 
 export async function postUserInfo(req: Request, res: Response) {
   try {
@@ -83,3 +59,26 @@ export async function login(req: Request, res: Response) {
       .send({ error: "401", message: "Username or password is incorrect" });
   }
 }
+
+/* export async function getAllUsers(req: Request, res: Response) {
+  try {
+    const user = await findAllUser();
+    res.json({ data: user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+}
+export async function getUserInfo(req: Request, res: Response) {
+  try {
+    let id = req.params.id;
+    const userId = Number(id);
+    if (id && userId) {
+      const user = await findUser(userId);
+      res.json({ data: user });
+    } else res.status(400).json({ message: "Invalid user ID." });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+} */

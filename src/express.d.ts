@@ -4,6 +4,3 @@ import { Request } from "express";
 export interface ExtendedRequest extends Request {
   user?: UserInstance; // Adjust the type of user as needed
 }
-export interface ExtendedRequest2 extends Request{
-  user?
-}

@@ -10,9 +10,11 @@ export async function postSwiper(req: ExtendedRequest, res: Response) {
   try {
     const { swipedId } = req.body;
 
-    if (req.user?.id && swipedId && typeof req.user.id === "number" && typeof swipedId === "number"){
-        const newUser = await addSwiper({ id: req.user.id , swipedId });
-        res.status(201).send({ id: req.user?.id });
+    if (req.user?.id && swipedId && typeof req.user.id === "number" && typeof swipedId === "number") {
+        const newUser = await addSwiper({ swipedById: req.user.id, swipedId });
+        res.status(201).send({ message: "added" });
+    } else {
+        res.status(400).send({ message: "Invalid input data" });
     }
     
   } catch (error) {
