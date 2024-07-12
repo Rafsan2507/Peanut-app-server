@@ -7,4 +7,16 @@ export async function addSwiper (data: { swipedById: number, swipedId: number}) 
     } catch (error) {
       throw new Error('Error adding swiper.');
     }
+  };
+
+  export async function findMatch (swipedById: number, swipedId: number) {
+      const match = await Swiper.findOne({
+        where: {
+          swipedById: swipedId,
+          swipedId: swipedById,
+        },
+      });
+  
+      return match;
+    
   }

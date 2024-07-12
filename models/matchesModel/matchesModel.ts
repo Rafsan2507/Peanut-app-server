@@ -1,21 +1,21 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
-
-interface UserAttributes {
+import User from "../UserModel/userModel";
+interface MatchAttributes {
   id: number;
   user1Id: number;
   user2Id: number;
 }
 
-export interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+export interface MatchCreationAttributes extends Optional<MatchAttributes, "id"> {}
 
-export interface UserInstance
-  extends Model<UserAttributes, UserCreationAttributes>,
-    UserAttributes {
+export interface MatchInstance
+  extends Model<MatchAttributes, MatchCreationAttributes>,
+  MatchAttributes {
   createdAt?: Date;
 }
 
-const Matches = sequelize.define<UserInstance>("matches", {
+const Matches = sequelize.define<MatchInstance>("matches", {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -26,12 +26,23 @@ const Matches = sequelize.define<UserInstance>("matches", {
   user1Id: {
     type: DataTypes.INTEGER,
     allowNull: true,
+    references: {
+      model: User,
+      key: 'id',
+    },
   },
   user2Id: {
     type: DataTypes.INTEGER,
     allowNull: true,
+    references: {
+      model: User,
+      key: 'id',
+    },
   },
 
 });
+
+
+
 
 export default Matches;

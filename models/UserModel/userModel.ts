@@ -1,6 +1,7 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
-
+import Swiper from "../SwipesModel/swipesModel";
+import Matches from "../matchesModel/matchesModel";
 interface UserAttributes {
   id: number;
   firstname: string;
@@ -53,5 +54,10 @@ const User = sequelize.define<UserInstance>("users", {
     allowNull: false,
   },
 });
+
+User.hasMany(Swiper, { foreignKey: 'swipedById', as: 'likesGiven' });
+User.hasMany(Swiper, { foreignKey: 'swipedId', as: 'likesReceived' });
+User.hasMany(Matches, { foreignKey: 'user1Id', as: 'matches1' });
+User.hasMany(Matches, { foreignKey: 'user2Id', as: 'matches2' });
 
 export default User;

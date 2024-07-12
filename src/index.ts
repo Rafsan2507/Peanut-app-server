@@ -5,6 +5,10 @@ import { Request, Response } from "express";
 import router from '../routes/signup.router';
 const cors = require("cors");
 
+import User from '../models/UserModel/userModel'; // Ensure these imports to load models
+import Swiper from'../models/SwipesModel/swipesModel'; // Ensure these imports to load models
+import Matches from '../models/matchesModel/matchesModel';
+
 const app: Express = express();
 app.use(cors());
 app.use(express.json());

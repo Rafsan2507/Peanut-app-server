@@ -1,21 +1,21 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
-
-interface UserAttributes {
+import User from "../UserModel/userModel";
+interface SwipeAttributes {
   id: number;
   swipedById: number;
   swipedId: number;
 }
 
-export interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+export interface SwipeCreationAttributes extends Optional<SwipeAttributes, "id"> {}
 
-export interface UserInstance
-  extends Model<UserAttributes, UserCreationAttributes>,
-    UserAttributes {
+export interface SwipeInstance
+  extends Model<SwipeAttributes, SwipeCreationAttributes>,
+  SwipeAttributes {
   createdAt?: Date;
 }
 
-const Swiper = sequelize.define<UserInstance>("swipers", {
+const Swiper = sequelize.define<SwipeInstance>("swipers", {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -26,12 +26,22 @@ const Swiper = sequelize.define<UserInstance>("swipers", {
   swipedById: {
     type: DataTypes.INTEGER,
     allowNull: true,
+    references: {
+      model: User,
+      key: 'id',
+    },
   },
   swipedId: {
     type: DataTypes.INTEGER,
     allowNull: true,
+    references: {
+      model: User,
+      key: 'id',
+    },
   },
 
 });
+
+
 
 export default Swiper;
