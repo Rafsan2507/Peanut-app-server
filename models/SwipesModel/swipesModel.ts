@@ -1,6 +1,7 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
 import User from "../UserModel/userModel";
+
 interface SwipeAttributes {
   id: number;
   swipedById: number;
@@ -11,7 +12,7 @@ export interface SwipeCreationAttributes extends Optional<SwipeAttributes, "id">
 
 export interface SwipeInstance
   extends Model<SwipeAttributes, SwipeCreationAttributes>,
-  SwipeAttributes {
+    SwipeAttributes {
   createdAt?: Date;
 }
 
@@ -39,9 +40,6 @@ const Swiper = sequelize.define<SwipeInstance>("swipers", {
       key: 'id',
     },
   },
-
 });
-
-
 
 export default Swiper;

@@ -2,6 +2,7 @@ import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
 import Swiper from "../SwipesModel/swipesModel";
 import Matches from "../matchesModel/matchesModel";
+
 interface UserAttributes {
   id: number;
   firstname: string;
@@ -55,14 +56,9 @@ const User = sequelize.define<UserInstance>("users", {
   },
 });
 
-User.hasMany(Swiper, { foreignKey: "swipedById" });
-User.hasMany(Swiper, { foreignKey: "swipedId" });
-Swiper.belongsTo(User, { as: "SwipedBy", foreignKey: "swipedById" });
-Swiper.belongsTo(User, { as: "Swiped", foreignKey: "swipedId" });
-
-User.hasMany(Matches, { foreignKey: "user1Id" });
-User.hasMany(Matches, { foreignKey: "user2Id" });
-Matches.belongsTo(User, { as: "User1", foreignKey: "user1Id" });
-Matches.belongsTo(User, { as: "User2", foreignKey: "user2Id" });
+User.hasMany(Swiper, { foreignKey: "swipedById", as: "SwipedBy" });
+User.hasMany(Swiper, { foreignKey: "swipedId", as: "Swiped" });
+User.hasMany(Matches, { foreignKey: "user1Id", as: "User1Matches" });
+User.hasMany(Matches, { foreignKey: "user2Id", as: "User2Matches" });
 
 export default User;

@@ -3,6 +3,7 @@ import config from "../config/db";
 import sequelize from "../models/index";
 import { Request, Response } from "express";
 import router from '../routes/signup.router';
+
 const cors = require("cors");
 
 

@@ -8,3 +8,17 @@ export async function addMatches (data: { user1Id: number, user2Id: number}) {
       throw new Error('Error adding matches.');
     }
   }
+
+  export async function findOneUser3(id: number) {
+    try {
+      const user2 = await Matches.findAll({
+        where: {
+          user1Id: id
+        }
+      });
+  
+      return user2;
+    } catch (error) {
+      throw new Error('Error login');
+    }
+  }
