@@ -2,13 +2,18 @@ import express, { Express } from "express";
 import config from "../config/db";
 import sequelize from "../models/index";
 import { Request, Response } from "express";
-import router from '../routes/signup.router';
+import router from "../routes/signup.router";
 
 const cors = require("cors");
 
+const corsOptions = {
+  origin: ["http://localhost:3000"],
+  credentials: true,
+  exposedHeaders: ["authorization"],
+};
 
 const app: Express = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(router);
 

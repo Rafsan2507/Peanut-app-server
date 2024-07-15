@@ -1,31 +1,25 @@
 import { Request, Response } from "express";
-import {
-  addUser,
-  findOneUser,
-} from "../models/UserModel/userquery";
+import { addUser, findOneUser } from "../models/UserModel/userquery";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY || "lalala this isnt secure";
 
-
 export async function postUserInfo(req: Request, res: Response) {
   try {
-    const { firstname, lastname, username, age, email, password } = req.body;
+    const { firstname, lastname, username, email, password } = req.body;
     if (password === "") throw new Error();
     const hash = await bcrypt.hash(password, 10);
     if (
       firstname &&
       lastname &&
       username &&
-      age &&
       email &&
       password &&
       typeof firstname === "string" &&
       typeof lastname === "string" &&
       typeof username === "string" &&
-      typeof age === "number" &&
       typeof email === "string" &&
       typeof password === "string"
     ) {
@@ -33,11 +27,11 @@ export async function postUserInfo(req: Request, res: Response) {
         firstname,
         lastname,
         username,
-        age,
         email,
         password: hash,
       });
       const accessToken = jwt.sign({ id: newUser.id }, SECRET_KEY);
+      res.cookie("authorization", accessToken);
       res.status(201).send({ accessToken });
     }
   } catch (error) {

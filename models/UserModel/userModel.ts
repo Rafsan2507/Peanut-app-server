@@ -8,12 +8,12 @@ interface UserAttributes {
   firstname: string;
   lastname: string;
   username: string;
-  age: number;
   email: string;
   password: string;
 }
 
-export interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+export interface UserCreationAttributes
+  extends Optional<UserAttributes, "id"> {}
 
 export interface UserInstance
   extends Model<UserAttributes, UserCreationAttributes>,
@@ -40,10 +40,6 @@ const User = sequelize.define<UserInstance>("users", {
   },
   username: {
     type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  age: {
-    type: DataTypes.INTEGER,
     allowNull: false,
   },
   email: {
