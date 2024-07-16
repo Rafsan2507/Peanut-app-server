@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
-import { addUser, findOneUser } from "../models/UserModel/userquery";
+import {
+  addUser,
+  findOneUser,
+  addDue,
+  addImage,
+} from "../models/UserModel/userquery";
+import { ExtendedRequest } from "../src/express";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
@@ -8,7 +14,8 @@ const SECRET_KEY = process.env.SECRET_KEY || "lalala this isnt secure";
 
 export async function postUserInfo(req: Request, res: Response) {
   try {
-    const { firstname, lastname, username, email, password } = req.body;
+    const { firstname, lastname, username, email, password, due, image } =
+      req.body;
     if (password === "") throw new Error();
     const hash = await bcrypt.hash(password, 10);
     if (
@@ -17,11 +24,15 @@ export async function postUserInfo(req: Request, res: Response) {
       username &&
       email &&
       password &&
+      due &&
+      image &&
       typeof firstname === "string" &&
       typeof lastname === "string" &&
       typeof username === "string" &&
       typeof email === "string" &&
-      typeof password === "string"
+      typeof password === "string" &&
+      typeof due === "number" &&
+      typeof image === "string"
     ) {
       const newUser = await addUser({
         firstname,
@@ -29,6 +40,8 @@ export async function postUserInfo(req: Request, res: Response) {
         username,
         email,
         password: hash,
+        due,
+        image,
       });
       const accessToken = jwt.sign({ id: newUser.id }, SECRET_KEY);
       res.cookie("authorization", accessToken);
@@ -51,6 +64,42 @@ export async function login(req: Request, res: Response) {
     res
       .status(401)
       .send({ error: "401", message: "Username or password is incorrect" });
+  }
+}
+
+export async function postDue(req: ExtendedRequest, res: Response) {
+  try {
+    const { due } = req.body;
+    const user_id = req.user?.id;
+    if (
+      user_id &&
+      due &&
+      typeof user_id === "number" &&
+      typeof due === "number"
+    ) {
+      const Duer = await addDue(user_id, due);
+      res.status(201).send("due added");
+    }
+  } catch (error) {
+    res.status(400).send({ error, message: "Could not add due" });
+  }
+}
+
+export async function postImage(req: ExtendedRequest, res: Response) {
+  try {
+    const { image } = req.body;
+    const user_id_2 = req.user?.id;
+    if (
+      user_id_2 &&
+      image &&
+      typeof user_id_2 === "number" &&
+      typeof image === "string"
+    ) {
+      const Duer = await addImage(user_id_2, image);
+      res.status(201).send("image added");
+    }
+  } catch (error) {
+    res.status(400).send({ error, message: "Could not add image" });
   }
 }
 

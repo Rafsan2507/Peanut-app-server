@@ -1,0 +1,33 @@
+/* import Likes from "./likesModel";
+
+export async function addHobbies(activities: string[]) {
+  try {
+    const newHobbies = await Promise.all(
+      activities.map((activity) => Likes.create({ activity }))
+    );
+    return newHobbies;
+  } catch (error) {
+    throw new Error("Error adding swipers.");
+  }
+} */
+
+import Likes from "./likesModel";
+
+export async function addHobby(activity: string) {
+  try {
+    const newLike = await Likes.create({ activity });
+    return newLike;
+  } catch (error) {
+    throw new Error("Error adding swiper.");
+  }
+}
+
+export async function findAllActivities() {
+  try {
+    const findAllActivities = await Likes.findAll();
+
+    return findAllActivities;
+  } catch (error) {
+    throw new Error("Error finding all users");
+  }
+}

@@ -1,4 +1,4 @@
-import { Model, DataTypes, Optional } from "sequelize";
+/* import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
 import User from "../UserModel/userModel";
 
@@ -9,7 +9,8 @@ interface ProfileAttributes {
   image: string;
 }
 
-export interface ProfileCreationAttributes extends Optional<ProfileAttributes, "id"> {}
+export interface ProfileCreationAttributes
+  extends Optional<ProfileAttributes, "id"> {}
 
 export interface ProfileInstance
   extends Model<ProfileAttributes, ProfileCreationAttributes>,
@@ -39,9 +40,10 @@ const Profile = sequelize.define<ProfileInstance>("profiles", {
     allowNull: true,
   },
   image: {
-    type: DataTypes.STRING, // Assuming URL or base64 string
+    type: DataTypes.STRING,
     allowNull: false,
   },
 });
 
 export default Profile;
+ */

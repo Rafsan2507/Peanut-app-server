@@ -2,6 +2,9 @@ import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
 import Swiper from "../SwipesModel/swipesModel";
 import Matches from "../matchesModel/matchesModel";
+//import Profile from "../ProfileModel/profileModel";
+import Preferences from "../ProfileModel/preferenceModel";
+import Likes from "../ProfileModel/likesModel";
 
 interface UserAttributes {
   id: number;
@@ -10,6 +13,8 @@ interface UserAttributes {
   username: string;
   email: string;
   password: string;
+  due: number;
+  image: string;
 }
 
 export interface UserCreationAttributes
@@ -50,11 +55,28 @@ const User = sequelize.define<UserInstance>("users", {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  due: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 User.hasMany(Swiper, { foreignKey: "swipedById", as: "SwipedBy" });
 User.hasMany(Swiper, { foreignKey: "swipedId", as: "Swiped" });
 User.hasMany(Matches, { foreignKey: "user1Id", as: "User1Matches" });
 User.hasMany(Matches, { foreignKey: "user2Id", as: "User2Matches" });
+
+User.belongsToMany(Likes, {
+  through: "Preferences",
+  foreignKey: "userId",
+});
+Likes.belongsToMany(User, {
+  through: "Preferences",
+  foreignKey: "likesId",
+});
 
 export default User;

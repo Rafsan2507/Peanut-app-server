@@ -1,7 +1,7 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
 import User from "../UserModel/userModel";
-import Likes from "../ProfileModel/likesModel"; // Assuming you have saved the Likes model in LikesModel/likesModel
+import Likes from "../ProfileModel/likesModel";
 
 interface PreferencesAttributes {
   id: number;
@@ -9,7 +9,8 @@ interface PreferencesAttributes {
   likesId: number;
 }
 
-export interface PreferencesCreationAttributes extends Optional<PreferencesAttributes, "id"> {}
+export interface PreferencesCreationAttributes
+  extends Optional<PreferencesAttributes, "id"> {}
 
 export interface PreferencesInstance
   extends Model<PreferencesAttributes, PreferencesCreationAttributes>,
@@ -45,5 +46,7 @@ const Preferences = sequelize.define<PreferencesInstance>("preferences", {
   },
 });
 
+Preferences.belongsTo(User, { foreignKey: "userId" });
+Preferences.belongsTo(Likes, { foreignKey: "likesId" });
 
 export default Preferences;

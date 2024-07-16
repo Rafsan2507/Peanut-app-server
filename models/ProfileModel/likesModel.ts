@@ -7,7 +7,8 @@ interface LikesAttributes {
   activity: string;
 }
 
-export interface LikesCreationAttributes extends Optional<LikesAttributes, "id"> {}
+export interface LikesCreationAttributes
+  extends Optional<LikesAttributes, "id"> {}
 
 export interface LikesInstance
   extends Model<LikesAttributes, LikesCreationAttributes>,
@@ -28,5 +29,10 @@ const Likes = sequelize.define<LikesInstance>("likes", {
     allowNull: false,
   },
 });
+
+/* Likes.belongsToMany(User, {
+  through: "Preferences",
+  foreignKey: "likesId",
+}); */
 
 export default Likes;

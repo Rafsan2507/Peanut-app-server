@@ -6,6 +6,8 @@ export async function addUser(data: {
   username: string;
   email: string;
   password: string;
+  due: number;
+  image: string;
 }) {
   try {
     const newUser = await User.create(data);
@@ -40,6 +42,32 @@ export async function findOneUser2(id: number) {
     return user2;
   } catch (error) {
     throw new Error("Error login");
+  }
+}
+
+export async function addDue(id: number, due: number) {
+  try {
+    const [updated] = await User.update(
+      { due },
+      {
+        where: { id },
+      }
+    );
+  } catch (error) {
+    throw new Error("Error adding due time.");
+  }
+}
+
+export async function addImage(id: number, image: string) {
+  try {
+    const [updated] = await User.update(
+      { image },
+      {
+        where: { id },
+      }
+    );
+  } catch (error) {
+    throw new Error("Error adding image.");
   }
 }
 
