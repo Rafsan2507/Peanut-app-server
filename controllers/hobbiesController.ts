@@ -25,7 +25,6 @@ export async function postHobby(req: Request, res: Response) {
 export async function getAllActivities(req: ExtendedRequest, res: Response) {
   try {
     const activities = await findAllActivities();
-    console.log(activities);
     res.json(activities);
   } catch (error) {
     console.log(error);

@@ -1,6 +1,6 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
-import User from "../UserModel/userModel";
+
 
 interface LikesAttributes {
   id: number;
@@ -30,9 +30,5 @@ const Likes = sequelize.define<LikesInstance>("likes", {
   },
 });
 
-/* Likes.belongsToMany(User, {
-  through: "Preferences",
-  foreignKey: "likesId",
-}); */
 
 export default Likes;

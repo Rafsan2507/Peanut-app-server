@@ -24,15 +24,15 @@ export async function postUserInfo(req: Request, res: Response) {
       username &&
       email &&
       password &&
-      due &&
-      image &&
+      /* due &&
+      image && */
       typeof firstname === "string" &&
       typeof lastname === "string" &&
       typeof username === "string" &&
       typeof email === "string" &&
-      typeof password === "string" &&
-      typeof due === "number" &&
-      typeof image === "string"
+      typeof password === "string"
+     /*  typeof due === "number" &&
+      typeof image === "string" */
     ) {
       const newUser = await addUser({
         firstname,
@@ -40,8 +40,8 @@ export async function postUserInfo(req: Request, res: Response) {
         username,
         email,
         password: hash,
-        due,
-        image,
+        /* due,
+        image, */
       });
       const accessToken = jwt.sign({ id: newUser.id }, SECRET_KEY);
       res.cookie("authorization", accessToken);
@@ -67,41 +67,7 @@ export async function login(req: Request, res: Response) {
   }
 }
 
-export async function postDue(req: ExtendedRequest, res: Response) {
-  try {
-    const { due } = req.body;
-    const user_id = req.user?.id;
-    if (
-      user_id &&
-      due &&
-      typeof user_id === "number" &&
-      typeof due === "number"
-    ) {
-      const Duer = await addDue(user_id, due);
-      res.status(201).send("due added");
-    }
-  } catch (error) {
-    res.status(400).send({ error, message: "Could not add due" });
-  }
-}
 
-export async function postImage(req: ExtendedRequest, res: Response) {
-  try {
-    const { image } = req.body;
-    const user_id_2 = req.user?.id;
-    if (
-      user_id_2 &&
-      image &&
-      typeof user_id_2 === "number" &&
-      typeof image === "string"
-    ) {
-      const Duer = await addImage(user_id_2, image);
-      res.status(201).send("image added");
-    }
-  } catch (error) {
-    res.status(400).send({ error, message: "Could not add image" });
-  }
-}
 
 /* export async function getAllUsers(req: Request, res: Response) {
   try {

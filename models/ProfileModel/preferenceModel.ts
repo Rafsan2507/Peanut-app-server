@@ -15,6 +15,7 @@ export interface PreferencesCreationAttributes
 export interface PreferencesInstance
   extends Model<PreferencesAttributes, PreferencesCreationAttributes>,
     PreferencesAttributes {
+  Likes: any;
   createdAt?: Date;
 }
 
@@ -46,7 +47,6 @@ const Preferences = sequelize.define<PreferencesInstance>("preferences", {
   },
 });
 
-Preferences.belongsTo(User, { foreignKey: "userId" });
-Preferences.belongsTo(Likes, { foreignKey: "likesId" });
+
 
 export default Preferences;

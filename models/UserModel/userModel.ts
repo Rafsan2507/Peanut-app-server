@@ -18,7 +18,7 @@ interface UserAttributes {
 }
 
 export interface UserCreationAttributes
-  extends Optional<UserAttributes, "id"> {}
+  extends Optional<UserAttributes, "id" | "due" | "image"> {}
 
 export interface UserInstance
   extends Model<UserAttributes, UserCreationAttributes>,
@@ -71,12 +71,20 @@ User.hasMany(Matches, { foreignKey: "user1Id", as: "User1Matches" });
 User.hasMany(Matches, { foreignKey: "user2Id", as: "User2Matches" });
 
 User.belongsToMany(Likes, {
-  through: "Preferences",
+  through: Preferences,
   foreignKey: "userId",
+  otherKey: "likesId",
+  as: "UserLikes",
 });
+
 Likes.belongsToMany(User, {
-  through: "Preferences",
+  through: Preferences,
   foreignKey: "likesId",
+  otherKey: "userId",
+  as: "LikesUsers",
 });
+
+Preferences.belongsTo(User, { foreignKey: "userId", as: "User" });
+Preferences.belongsTo(Likes, { foreignKey: "likesId", as: "Likes" });
 
 export default User;

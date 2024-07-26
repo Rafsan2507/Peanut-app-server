@@ -24,10 +24,13 @@ export async function addHobby(activity: string) {
 
 export async function findAllActivities() {
   try {
-    const findAllActivities = await Likes.findAll();
-
-    return findAllActivities;
+    const activities = await Likes.findAll({
+      attributes: ['id', 'activity']
+    });
+    return activities.map(activity => ({ id: activity.id, activity: activity.activity }));
   } catch (error) {
-    throw new Error("Error finding all users");
+    throw new Error("Error finding all activities");
   }
 }
+
+

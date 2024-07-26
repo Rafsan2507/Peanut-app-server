@@ -6,8 +6,8 @@ export async function addUser(data: {
   username: string;
   email: string;
   password: string;
-  due: number;
-  image: string;
+  /* due: number;
+  image: string; */
 }) {
   try {
     const newUser = await User.create(data);
