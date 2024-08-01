@@ -1,11 +1,11 @@
 import { Response, NextFunction } from "express";
 const jwt = require("jsonwebtoken");
-import { findOneUser2 } from "../models/UserModel/userquery";
+import { findAuthenticatedUser } from "../models/UserModel/userquery";
 import { ExtendedRequest } from "../src/express";
 const dotenv = require("dotenv");
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY || "lalala this isnt secure";
-// REMOVE-END
+
 
 export async function authMiddleware(
   req: ExtendedRequest,
@@ -22,7 +22,7 @@ export async function authMiddleware(
     // verify & decode token payload,
     const { id } = jwt.verify(token, SECRET_KEY);
     // attempt to find user object and set to req
-    const user = await findOneUser2(id);
+    const user = await findAuthenticatedUser(id);
     if (!user) return res.sendStatus(401);
     req.user = user;
     next();
@@ -30,5 +30,4 @@ export async function authMiddleware(
     res.sendStatus(401);
   }
 
-  // REMOVE-END
 }

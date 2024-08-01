@@ -2,9 +2,9 @@ import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../index";
 import Swiper from "../SwipesModel/swipesModel";
 import Matches from "../matchesModel/matchesModel";
-//import Profile from "../ProfileModel/profileModel";
 import Preferences from "../ProfileModel/preferenceModel";
 import Likes from "../ProfileModel/likesModel";
+import Messages from "../messageModel/messageModel";
 
 interface UserAttributes {
   id: number;
@@ -69,6 +69,8 @@ User.hasMany(Swiper, { foreignKey: "swipedById", as: "SwipedBy" });
 User.hasMany(Swiper, { foreignKey: "swipedId", as: "Swiped" });
 User.hasMany(Matches, { foreignKey: "user1Id", as: "User1Matches" });
 User.hasMany(Matches, { foreignKey: "user2Id", as: "User2Matches" });
+User.hasMany(Messages, { foreignKey: "sender_Id", as: "sender" });
+User.hasMany(Messages, { foreignKey: "receiver_Id", as: "receiver" });
 
 User.belongsToMany(Likes, {
   through: Preferences,
@@ -86,5 +88,8 @@ Likes.belongsToMany(User, {
 
 Preferences.belongsTo(User, { foreignKey: "userId", as: "User" });
 Preferences.belongsTo(Likes, { foreignKey: "likesId", as: "Likes" });
+
+Matches.belongsTo(User, { foreignKey: 'user2Id', as: 'User2' });
+
 
 export default User;

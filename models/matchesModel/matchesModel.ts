@@ -13,6 +13,7 @@ export interface MatchCreationAttributes extends Optional<MatchAttributes, "id">
 export interface MatchInstance
   extends Model<MatchAttributes, MatchCreationAttributes>,
     MatchAttributes {
+  User2: any;
   createdAt?: Date;
 }
 

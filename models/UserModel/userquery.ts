@@ -6,8 +6,6 @@ export async function addUser(data: {
   username: string;
   email: string;
   password: string;
-  /* due: number;
-  image: string; */
 }) {
   try {
     const newUser = await User.create(data);
@@ -17,7 +15,7 @@ export async function addUser(data: {
   }
 }
 
-export async function findOneUser(email: string) {
+export async function findUserbyEmail(email: string) {
   try {
     const user2 = await User.findOne({
       where: {
@@ -31,7 +29,7 @@ export async function findOneUser(email: string) {
   }
 }
 
-export async function findOneUser2(id: number) {
+export async function findAuthenticatedUser(id: number) {
   try {
     const user2 = await User.findOne({
       where: {
@@ -71,25 +69,3 @@ export async function addImage(id: number, image: string) {
   }
 }
 
-/* export async function findAllUser () {
-    try {
-      const user = await User.findAll();
-  
-      return user;
-    } catch (error) {
-      throw new Error('Error finding all users');
-    }
-  }
-
-export async function findUser (id: number) {
-  try {
-    const user = await User.findAll({
-      where: {
-        id: id
-      }
-    });
-    return user;
-  } catch (error) {
-    throw new Error('Error finding user.');
-  }
-} */

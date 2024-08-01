@@ -13,7 +13,7 @@ export async function addHobbies(activities: string[]) {
 
 import Likes from "./likesModel";
 
-export async function addHobby(activity: string) {
+export async function addListofActivities(activity: string) {
   try {
     const newLike = await Likes.create({ activity });
     return newLike;

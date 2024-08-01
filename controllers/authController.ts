@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
 import {
   addUser,
-  findOneUser,
-  addDue,
-  addImage,
+  findUserbyEmail,
 } from "../models/UserModel/userquery";
-import { ExtendedRequest } from "../src/express";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
@@ -31,17 +28,13 @@ export async function postUserInfo(req: Request, res: Response) {
       typeof username === "string" &&
       typeof email === "string" &&
       typeof password === "string"
-     /*  typeof due === "number" &&
-      typeof image === "string" */
     ) {
       const newUser = await addUser({
         firstname,
         lastname,
         username,
         email,
-        password: hash,
-        /* due,
-        image, */
+        password: hash
       });
       const accessToken = jwt.sign({ id: newUser.id }, SECRET_KEY);
       res.cookie("authorization", accessToken);
@@ -55,7 +48,7 @@ export async function postUserInfo(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   try {
-    const user = await findOneUser(email);
+    const user = await findUserbyEmail(email);
     const validatedPass = await bcrypt.compare(password, user?.password);
     if (!validatedPass) throw new Error();
     const accessToken = jwt.sign({ id: user?.id }, SECRET_KEY);
@@ -67,27 +60,3 @@ export async function login(req: Request, res: Response) {
   }
 }
 
-
-
-/* export async function getAllUsers(req: Request, res: Response) {
-  try {
-    const user = await findAllUser();
-    res.json({ data: user });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-}
-export async function getUserInfo(req: Request, res: Response) {
-  try {
-    let id = req.params.id;
-    const userId = Number(id);
-    if (id && userId) {
-      const user = await findUser(userId);
-      res.json({ data: user });
-    } else res.status(400).json({ message: "Invalid user ID." });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-} */

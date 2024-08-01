@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import { ExtendedRequest } from "../src/express";
 import {
-  addHobby,
+  addListofActivities,
   findAllActivities,
 } from "../models/ProfileModel/hobbiesQuery";
 const dotenv = require("dotenv");
 dotenv.config();
 
-export async function postHobby(req: Request, res: Response) {
+export async function postListofActivities(req: Request, res: Response) {
   const { activity } = req.body;
 
   try {
     if (activity && typeof activity === "string") {
-      const newLike = await addHobby(activity);
+      const newLike = await addListofActivities(activity);
       return res.status(201).json(newLike);
     } else {
       return res.status(400).json({ error: "string is empty" });

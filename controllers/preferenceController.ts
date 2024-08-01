@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 import { addPreferences } from "../models/ProfileModel/preferenceQuery";
 
-export async function postPreferences(req: ExtendedRequest, res: Response) {
+export async function postUserPreferences(req: ExtendedRequest, res: Response) {
     try {
         const { preferences } = req.body;
         const userId = (req.user as any).id;
